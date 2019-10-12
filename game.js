@@ -111,3 +111,12 @@ function update()
     this.player.setFlipX(true);
   }
 }
+
+function playerHit(player, fire)
+{
+  player.setVelocity(0);
+  player.setX(50);
+  player.setY(50);
+  player.play('idle', true);
+}
+
