@@ -15,7 +15,7 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 500 },
+      gravity: { y: 420 },
       debug: true,
     },
   }
@@ -33,8 +33,8 @@ function preload()
 
 function create()
 {
-  const backgroundImage = this.add.image(0,0,'background').setOrigin(0.0);
-  backgroundImage.setScale(2, 0.8);
+  const backgroundImage = this.add.image(-500,0,'background').setOrigin(0.0);
+  backgroundImage.setScale(16, 3.5);
 
   const map = this.make.tilemap( { key: 'map' } );
 
@@ -44,8 +44,8 @@ function create()
 
   platforms.setCollisionByExclusion(-1, true);
 
-  this.player = this.physics.add.sprite(500, 300, 'player');
-  this.player.setBounce(0.1);
+  this.player = this.physics.add.sprite(0, 0, 'player');
+  this.player.setBounce(0.05);
   this.player.setCollideWorldBounds(false);
   this.physics.add.collider(this.player, platforms);
 
@@ -56,37 +56,38 @@ function create()
       start: 2,
       end: 3,
     }),
-    framerate: 10,
+    framerate: 3,
     repeat: -1
   });
 
   this.anims.create({
     key: 'idle',
     frames: [{ key: 'player', frame: 'robo_player_0' }],
-    framereate: 10,
+    framereate: 3,
   });
 
   this.anims.create({
     key: 'jump',
     frames: [{ key: 'player', frame: 'robo_player_1' }],
-    framerate: 10,
+    framerate: 3,
   });
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
   this.cameras.main.startFollow(this.player);
+  playerReset(this.player);
 }
 
 function update()
 {
   if(this.cursors.left.isDown)
   {
-    this.player.setVelocityX(-200);
+    this.player.setVelocityX(-300);
     if(this.player.body.onFloor()) { this.player.play('walk', true); }
   }
   else if(this.cursors.right.isDown)
   {
-    this.player.setVelocityX(200);
+    this.player.setVelocityX(300);
     if(this.player.body.onFloor()) { this.player.play('walk', true); }
   }
   else
@@ -109,13 +110,27 @@ function update()
   {
     this.player.setFlipX(true);
   }
+
+  if(this.player.body.velocity.y > 0) { this.player.body.velocity.y = this.player.body.velocity.y * 1.07 }
+  if(this.player.body.velocity.y > 500) { this.player.body.velocity.y = 700}
+
+  if(!checkPlayerBounds(this.player, 50, 300, 64)){ playerReset(this.player) }
 }
 
-function playerHit(player, fire)
+function checkPlayerBounds(player, worldH, worldW, tileSize)
+{
+  if (player.x < -250) { return false}
+  if (player.y < 0) {return false}
+  if (player.x > worldW * tileSize + 250) {return false}
+  if (player.y > worldH * tileSize + 500) {return false}
+  return true;
+}
+
+function playerReset(player)
 {
   player.setVelocity(0);
-  player.setX(150);
-  player.setY(100);
+  player.setX(400);
+  player.setY(2900);
   player.play('idle', true);
 }
 
