@@ -73,6 +73,7 @@ function create()
   });
 
   this.cursors = this.input.keyboard.createCursorKeys();
+
   this.cameras.main.startFollow(this.player);
 }
 
