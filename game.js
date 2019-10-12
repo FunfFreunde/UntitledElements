@@ -46,7 +46,7 @@ function create()
 
   this.player = this.physics.add.sprite(500, 300, 'player');
   this.player.setBounce(0.1);
-  this.player.setCollideWorldBounds(true);
+  this.player.setCollideWorldBounds(false);
   this.physics.add.collider(this.player, platforms);
 
   this.anims.create({
