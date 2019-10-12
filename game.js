@@ -26,7 +26,6 @@ const game = new Phaser.Game(config);
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
-  this.load.image('spike', './assets/images/spike.png');
   this.load.image('tiles', './assets/tilesets/platformPack_tilesheet.png');
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/kenney_player.png', 'assets/images/kenney_player_atlas.json');
@@ -39,7 +38,7 @@ function create()
 
   const map = this.make.tilemap( { key: 'map' } );
 
-  const tileset = map.addTilesetImage('kenny_simple_platformer', 'tiles');
+  const tileset = map.addTilesetImage('simple_platformer', 'tiles');
 
   const platforms = map.createStaticLayer('Platforms',tileset, 0, 230);
 
@@ -115,8 +114,8 @@ function update()
 function playerHit(player, fire)
 {
   player.setVelocity(0);
-  player.setX(50);
-  player.setY(50);
+  player.setX(150);
+  player.setY(100);
   player.play('idle', true);
 }
 
