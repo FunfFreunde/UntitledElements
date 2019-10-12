@@ -75,6 +75,7 @@ function create()
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
+  
 
   this.spikes = this.physics.add.group({
     allowGravity: false,
@@ -87,6 +88,8 @@ function create()
     const spike = this.spikes.create(spikeObject.x, spikeObject.y + 200 - spikeObject.height/2, 'spike').setOrigin(0,0);
     spike.body.setSize(spike.width, spike.height/2).setOffset(0, spike.height/2);
   });
+  
+  this.cameras.main.startFollow(this.player);
 }
 
 function update()
