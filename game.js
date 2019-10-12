@@ -97,7 +97,7 @@ function update()
   if((this.cursors.up.isDown || this.cursors.space.isDown) && this.player.body.onFloor())
   {
     this.player.setVelocityY(-350);
-    this.player.play('idle', true);
+    this.player.play('jump', true);
   }
 
   if(this.player.body.velocity.x > 0)
