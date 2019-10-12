@@ -75,18 +75,7 @@ function create()
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
-
-  this.spikes = this.physics.add.group({
-    allowGravity: false,
-    immovable: true
-  });
-
-  const spikeObjects = map.getObjectLayer('Spikes')['objects'];
-
-  spikeObjects.forEach(spikeObject => {
-    const spike = this.spikes.create(spikeObject.x, spikeObject.y + 200 - spikeObject.height/2, 'spike').setOrigin(0,0);
-    spike.body.setSize(spike.width, spike.height/2).setOffset(0, spike.height/2);
-  });
+  this.cameras.main.startFollow(this.player);
 }
 
 function update()
@@ -122,12 +111,3 @@ function update()
     this.player.setFlipX(true);
   }
 }
-
-function playerHit(player, fire)
-{
-  player.setVelocity(0);
-  player.setX(50);
-  player.setY(50);
-  player.play('idle', true);
-}
-
