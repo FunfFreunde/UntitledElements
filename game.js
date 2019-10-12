@@ -28,7 +28,7 @@ function preload()
   this.load.image('background', './assets/images/background.png');
   this.load.image('tiles', './assets/tilesets/platformPack_tilesheet.png');
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
-  this.load.atlas('player', 'assets/images/kenney_player.png', 'assets/images/kenney_player_atlas.json');
+  this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
 }
 
 function create()
@@ -53,8 +53,8 @@ function create()
     key: 'walk',
     frames: this.anims.generateFrameNames('player', {
       prefix: 'robo_player_',
-      start: 2,
-      end: 3,
+      start: 0,
+      end: 2,
     }),
     framerate: 10,
     repeat: -1
