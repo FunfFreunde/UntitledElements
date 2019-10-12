@@ -75,6 +75,8 @@ function create()
 
   this.cursors = this.input.keyboard.createCursorKeys();
 
+
+
   this.spikes = this.physics.add.group({
     allowGravity: false,
     immovable: true
