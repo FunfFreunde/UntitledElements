@@ -4,10 +4,10 @@ class Menu extends Phaser.Scene{
     }
 
     preload(){
-        this.load.image('bg','/assets/images/background.png')
+        this.load.image('startScreen','./assets/images/start_screen.png');
     }
 
     create() {
-        let bg = this.add.image(20,20,'bg').setOrigin(0,0);
+        let startMenu = this.add.image((window.innerWidth - 1000),(window.innerHeight - 550),'startScreen');
     }
 }
