@@ -35,6 +35,8 @@ function preload()
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
   this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
   this.load.audio('jump', ['assets/audio/jump.wav']);
+  this.load.audio('shoot', ['assets/audio/shoot.wav']);
+
   this.load.image('water', './assets/images/water.png');
   this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
 
@@ -195,6 +197,9 @@ function update()
     w = w[w.length - 1];
     w.body.velocity.x = vecX;
     w.body.velocity.y = vecY;
+
+    let shoot = this.sound.add('shoot');
+    shoot.play();
   }
 
   this.waters.getChildren().forEach(function(e)
