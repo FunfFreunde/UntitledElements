@@ -17,14 +17,16 @@ const config = {
     arcade: {
       gravity: { y: 420 },
       debug: true,
+
     },
   }
 };
 
 var timedEvent;
 
+
 const game = new Phaser.Game(config);
-  
+
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
@@ -32,8 +34,10 @@ function preload()
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
   this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
+  this.load.audio('jump', ['assets/audio/jump.wav']);
   this.load.image('water', './assets/images/water.png');
   this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
+
 }
 
 function create()
@@ -45,14 +49,26 @@ function create()
 
   const tileset = map.addTilesetImage('simple_platformer', 'tiles');
 
-  const platforms = map.createStaticLayer('Platforms',tileset, 0, 230);
+  
+  const Background = map.createStaticLayer('Background',tileset, 0, 230);
+  Background.setCollisionByExclusion(-1, false);
 
+  const Background2 = map.createStaticLayer('Back2',tileset, 0, 230);
+  Background2.setCollisionByExclusion(-1, false);
+
+  const Background3 = map.createStaticLayer('Back3',tileset, 0, 230);
+  Background3.setCollisionByExclusion(-1, false);
+
+  const platforms = map.createStaticLayer('Platforms',tileset, 0, 230);
   platforms.setCollisionByExclusion(-1, true);
 
   this.player = this.physics.add.sprite(0, 0, 'player');
   this.player.setBounce(0.05);
   this.player.setCollideWorldBounds(false);
   this.physics.add.collider(this.player, platforms);
+
+  const ForeGround = map.createStaticLayer('ForeGround',tileset, 0, 230);
+  ForeGround.setCollisionByExclusion(-1, false);
 
   this.waters = this.physics.add.group({
     allowGravity: true,
@@ -97,6 +113,7 @@ function create()
       volume: .3,
       loop: true
     })
+
 
   this.fires = this.physics.add.group({
     allowGravity: false,
@@ -153,6 +170,10 @@ function update()
   {
     this.player.setVelocityY(-350);
     this.player.play('jump', true);
+    let jump = this.sound.add('jump');
+    jump.play();
+
+
   }
 
   //----------Water----------
