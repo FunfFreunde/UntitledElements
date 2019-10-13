@@ -26,6 +26,7 @@ var timedEvent;
 
 const game = new Phaser.Game(config);
 
+
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
