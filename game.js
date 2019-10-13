@@ -29,6 +29,9 @@ function preload()
   this.load.image('tiles', './assets/tilesets/platformPack_tilesheet.png');
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
+  this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
+
+
 }
 
 function create()
@@ -76,6 +79,17 @@ function create()
 
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
+
+    // load audio
+    //music = this.sound.add('hotttt', true);
+    //music.play();
+    let bgmusic = this.sound.add('bgmusic')
+    bgmusic.play({
+      volume: .3,
+      loop: true
+    })
+
+
 }
 
 function update()
