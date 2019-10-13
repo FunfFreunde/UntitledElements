@@ -253,7 +253,6 @@ function fireWaterCollision(fires, waters)
   {
     fires.forEach(function(f)
     {
-      console.log(w)
       if(doCollide(w,f)) { extinguishFire(f); w.destroy(); }
     });
   });
