@@ -110,7 +110,6 @@ function create()
   this.w_key = this.input.keyboard.addKey('W');
   this.space_key = this.input.keyboard.addKey('SPACE');
 
-
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
@@ -136,8 +135,21 @@ function create()
     framerate: 10,
     repeat: -1
   });
-  this.fires.create(400, 2900, 'fire');
-  this.fires.create(500, 645, 'fire');
+  this.fires.create(7457 , 3014.5, 'fire');
+  this.fires.create(6240 , 2630, 'fire');
+  this.fires.create(9441.5 , 2951.5, 'fire');
+
+  this.fires.create(10273, 3144.5, 'fire');
+  this.fires.create(10273 + 64, 3144.5, 'fire');
+  this.fires.create(10273 + 64 * 2, 3144.5, 'fire');
+  this.fires.create(10273 + 64 * 3, 3144.5, 'fire');
+  this.fires.create(10273 + 64 * 4, 3144.5, 'fire');
+  this.fires.create(10273 + 64 * 5, 3144.5, 'fire');
+  this.fires.create(10273 + 64 * 6, 3144.5, 'fire');
+  this.fires.create(17824.5, 1736.5, 'fire');
+  this.fires.create(17824.75, 1672.5, 'fire');
+  this.fires.create(18591.5, 1799.5, 'fire');
+
   this.fires.playAnimation('burn');
 }
 
@@ -242,7 +254,7 @@ function playerReset(player)
 {
   player.setVelocity(0);
   player.setX(400);
-  player.setY(2700);
+  player.setY(3010);
   player.play('idle', true);
 }
 
