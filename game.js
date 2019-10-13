@@ -16,7 +16,7 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 420 },
-      debug: true,
+      debug: false,
     },
   }
 };
@@ -36,6 +36,9 @@ function preload()
 
 function create()
 {
+  game.scene.add('PlayGame', PlayGame);
+  game.scene.start('PlayGame');
+
   const backgroundImage = this.add.image(-500,0,'background').setOrigin(0.0);
   backgroundImage.setScale(16, 3.5);
 
