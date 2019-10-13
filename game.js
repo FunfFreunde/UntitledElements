@@ -16,12 +16,13 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 420 },
-      debug: false,
+      debug: true,
     },
   }
 };
 
 const game = new Phaser.Game(config);
+
 
 function preload()
 {
@@ -30,15 +31,14 @@ function preload()
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
   this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
+  this.load.audio('jump', ['assets/audio/jump.wav']);
   this.load.image('water', './assets/images/water.png');
   this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
+
 }
 
 function create()
 {
-  game.scene.add('PlayGame', PlayGame);
-  game.scene.start('PlayGame');
-
   const backgroundImage = this.add.image(-500,0,'background').setOrigin(0.0);
   backgroundImage.setScale(16, 3.5);
 
@@ -111,6 +111,7 @@ function create()
       loop: true
     })
 
+
   this.fires = this.physics.add.group({
     allowGravity: false,
     immovable: true,
@@ -166,6 +167,10 @@ function update()
   {
     this.player.setVelocityY(-350);
     this.player.play('jump', true);
+    let jump = this.sound.add('jump');
+    jump.play();
+
+
   }
 
   //----------Water----------
