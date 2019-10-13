@@ -138,7 +138,6 @@ function create()
   this.fires.create(400, 2900, 'fire');
   this.fires.create(500, 645, 'fire');
   this.fires.playAnimation('burn');
-
 }
 
 
