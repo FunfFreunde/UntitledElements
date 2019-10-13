@@ -29,6 +29,7 @@ function preload()
   this.load.image('tiles', './assets/tilesets/platformPack_tilesheet.png');
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
+  this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
   this.load.image('water', './assets/images/water.png');
   this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
 }
@@ -86,6 +87,14 @@ function create()
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
+    // load audio
+    //music = this.sound.add('hotttt', true);
+    //music.play();
+    let bgmusic = this.sound.add('bgmusic')
+    bgmusic.play({
+      volume: .3,
+      loop: true
+    })
 
   this.fires = this.physics.add.group({
     allowGravity: false,
@@ -177,11 +186,12 @@ function update()
   if(this.player.body.velocity.y > 500) { this.player.body.velocity.y = 700}
 
   if(!checkPlayerBounds(this.player, 50, 300, 64)){ playerReset(this.player) }
+
 }
 
 function checkPlayerBounds(player, worldH, worldW, tileSize)
 {
-  if (player.x < -250) { return false}
+  if (player.x < -250) { return false }
   if (player.y < 0) {return false}
   if (player.x > worldW * tileSize + 250) {return false}
   if (player.y > worldH * tileSize + 500) {return false}
