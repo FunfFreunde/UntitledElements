@@ -31,7 +31,7 @@ function preload()
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
   this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
   this.load.image('water', './assets/images/water.png');
-
+  this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
 }
 
 function create()
@@ -95,10 +95,34 @@ function create()
       volume: .3,
       loop: true
     })
+
+  this.fires = this.physics.add.group({
+    allowGravity: false,
+    immovable: true,
+  });
+
+  this.anims.create({
+    key: 'burn',
+    frames: this.anims.generateFrameNames('fire', {
+      prefix: 'lit_',
+      start: 0,
+      end: 1
+    }),
+    framerate: 10,
+    repeat: -1
+  });
+  this.fires.create(400, 2900, 'fire');
+  this.fires.create(500, 645, 'fire');
+  this.fires.playAnimation('burn');
 }
+
 
 function update()
 {
+//  this.fires.
+//  this.fires.forEach(function(fire) {
+//    fire.play('burn', true);
+//  }, this);
   if(this.cursors.left.isDown)
   {
     this.player.setVelocityX(-300);
