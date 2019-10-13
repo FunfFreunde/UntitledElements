@@ -83,7 +83,10 @@ function create()
   });
 
   this.cursors = this.input.keyboard.createCursorKeys();
-
+  this.a_key = this.input.keyboard.addKey('A');
+  this.d_key = this.input.keyboard.addKey('D');
+  this.w_key = this.input.keyboard.addKey('W');
+  
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
@@ -119,16 +122,12 @@ function create()
 
 function update()
 {
-//  this.fires.
-//  this.fires.forEach(function(fire) {
-//    fire.play('burn', true);
-//  }, this);
-  if(this.cursors.left.isDown)
+  if(this.cursors.left.isDown || this.a_key.isDown)
   {
     this.player.setVelocityX(-300);
     if(this.player.body.onFloor()) { this.player.play('walk', true); }
   }
-  else if(this.cursors.right.isDown)
+  else if(this.cursors.right.isDown || this.d_key.isDown)
   {
     this.player.setVelocityX(300);
     if(this.player.body.onFloor()) { this.player.play('walk', true); }
@@ -139,7 +138,7 @@ function update()
     if(this.player.body.onFloor()) { this.player.play('idle', true); }
   }
 
-  if((this.cursors.up.isDown || this.cursors.space.isDown) && this.player.body.onFloor())
+  if((this.cursors.up.isDown || this.cursors.space.isDown || this.w_key.isDown) && this.player.body.onFloor())
   {
     this.player.setVelocityY(-350);
     this.player.play('jump', true);
@@ -205,3 +204,9 @@ function playerReset(player)
   player.setY(2900);
   player.play('idle', true);
 }
+
+function fireExtinguish()
+{
+
+}
+
