@@ -17,11 +17,13 @@ const config = {
     arcade: {
       gravity: { y: 420 },
       debug: true,
+
     },
   }
 };
 
 const game = new Phaser.Game(config);
+
 
 function preload()
 {
@@ -30,8 +32,10 @@ function preload()
   this.load.tilemapTiledJSON('map', './assets/tilemaps/level1.json');
   this.load.atlas('player', 'assets/images/duckface.png', 'assets/images/duckface_player_atlas.json');
   this.load.audio('bgmusic', ['assets/audio/bg.mp3']);
+  this.load.audio('jump', ['assets/audio/jump.wav']);
   this.load.image('water', './assets/images/water.png');
   this.load.atlas('fire', 'assets/images/fire.png', 'assets/images/fire.json');
+
 }
 
 function create()
@@ -90,14 +94,12 @@ function create()
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
-    // load audio
-    //music = this.sound.add('hotttt', true);
-    //music.play();
     let bgmusic = this.sound.add('bgmusic')
     bgmusic.play({
       volume: .3,
       loop: true
     })
+
 
   this.fires = this.physics.add.group({
     allowGravity: false,
@@ -122,6 +124,18 @@ function create()
 
 function update()
 {
+  reIgniteFire(this.fires);
+  fireWaterCollision(this.fires.getChildren(), this.waters.getChildren());
+
+  player_ = this.player;
+  this.fires.getChildren().forEach(function(f)
+  {
+    if(doCollide(player_, f)) { playerReset(player_); }
+  });
+
+
+  //----------Movement----------
+
   if(this.cursors.left.isDown || this.a_key.isDown)
   {
     this.player.setVelocityX(-300);
@@ -142,8 +156,13 @@ function update()
   {
     this.player.setVelocityY(-350);
     this.player.play('jump', true);
+    let jump = this.sound.add('jump');
+    jump.play();
+
+
   }
 
+  //----------Water----------
   pointer = this.input.activePointer;
 
   if(pointer.isDown)
@@ -153,9 +172,6 @@ function update()
 
     var vecX = pointer.worldX - this.player.x;
     var vecY = pointer.worldY - this.player.y;
-
-    //vecX = vecX / Math.sqrt(vecX * vecX + vecY * vecY);
-    //vecY = vecY / Math.sqrt(vecX * vecX + vecY * vecY);
 
     vecX = 2 * vecX;
     vecY = 2 * vecY;
@@ -201,12 +217,43 @@ function playerReset(player)
 {
   player.setVelocity(0);
   player.setX(400);
-  player.setY(2900);
+  player.setY(2700);
   player.play('idle', true);
 }
 
-function fireExtinguish()
+function reIgniteFire(fires)
 {
-
+  fires.getChildren().forEach(function(f)
+  {
+    f.setVisible(true);
+    f.setActive(true);
+  });
 }
 
+function extinguishFire(fire)
+{
+  fire.setVisible(false);
+  fire.setActive(false);
+}
+
+function fireWaterCollision(fires, waters)
+{
+  waters.forEach(function(w)
+  {
+    fires.forEach(function(f)
+    {
+      console.log(w)
+      if(doCollide(w,f)) { extinguishFire(f); w.destroy(); }
+    });
+  });
+}
+
+function doCollide(a, b)
+{
+  if(a.x + a.width < b.x) { return false; }
+  if(a.x > b.x + b.width) { return false; }
+  if(a.y + a.height < b.y) { return false; }
+  if(a.y > b.y + b.height) { return false; }
+
+  return true;
+}
