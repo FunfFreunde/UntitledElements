@@ -26,7 +26,6 @@ var timedEvent;
 
 const game = new Phaser.Game(config);
 
-
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
@@ -138,6 +137,7 @@ function create()
   this.fires.create(400, 2900, 'fire');
   this.fires.create(500, 645, 'fire');
   this.fires.playAnimation('burn');
+
 }
 
 
