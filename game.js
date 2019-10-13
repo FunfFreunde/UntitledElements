@@ -43,14 +43,26 @@ function create()
 
   const tileset = map.addTilesetImage('simple_platformer', 'tiles');
 
-  const platforms = map.createStaticLayer('Platforms',tileset, 0, 230);
+  
+  const Background = map.createStaticLayer('Background',tileset, 0, 230);
+  Background.setCollisionByExclusion(-1, false);
 
+  const Background2 = map.createStaticLayer('Back2',tileset, 0, 230);
+  Background2.setCollisionByExclusion(-1, false);
+
+  const Background3 = map.createStaticLayer('Back3',tileset, 0, 230);
+  Background3.setCollisionByExclusion(-1, false);
+
+  const platforms = map.createStaticLayer('Platforms',tileset, 0, 230);
   platforms.setCollisionByExclusion(-1, true);
 
   this.player = this.physics.add.sprite(0, 0, 'player');
   this.player.setBounce(0.05);
   this.player.setCollideWorldBounds(false);
   this.physics.add.collider(this.player, platforms);
+
+  const ForeGround = map.createStaticLayer('ForeGround',tileset, 0, 230);
+  ForeGround.setCollisionByExclusion(-1, false);
 
   this.waters = this.physics.add.group({
     allowGravity: true,
