@@ -16,8 +16,7 @@ const config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 420 },
-      debug: true,
-
+      debug: false,
     },
   }
 };
@@ -42,6 +41,9 @@ function preload()
 
 function create()
 {
+  game.scene.add('PlayGame', PlayGame);
+  game.scene.start('PlayGame');
+
   const backgroundImage = this.add.image(-500,0,'background').setOrigin(0.0);
   backgroundImage.setScale(16, 3.5);
 
@@ -114,7 +116,6 @@ function create()
       loop: true
     })
 
-
   this.fires = this.physics.add.group({
     allowGravity: false,
     immovable: true,
@@ -133,7 +134,6 @@ function create()
   this.fires.create(400, 2900, 'fire');
   this.fires.create(500, 645, 'fire');
   this.fires.playAnimation('burn');
-
 }
 
 
