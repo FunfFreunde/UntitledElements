@@ -125,6 +125,7 @@ function create()
 function update()
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   reIgniteFire(this.fires);
   fireWaterCollision(this.fires.getChildren(), this.waters.getChildren());
 
@@ -139,6 +140,8 @@ function update()
 
   if(this.cursors.left.isDown || this.a_key.isDown)
 =======
+=======
+>>>>>>> 75b309a6bd56c52880caf3f829b30789280f7cf8
 
 
 //  this.fires.
