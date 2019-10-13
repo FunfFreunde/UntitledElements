@@ -49,7 +49,7 @@ function create()
 
   const tileset = map.addTilesetImage('simple_platformer', 'tiles');
 
-  
+
   const Background = map.createStaticLayer('Background',tileset, 0, 230);
   Background.setCollisionByExclusion(-1, false);
 
@@ -82,7 +82,7 @@ function create()
     frames: this.anims.generateFrameNames('player', {
       prefix: 'robo_player_',
       start: 0,
-      end: 2,
+      end:1,
     }),
     framerate: 3,
     repeat: -1
@@ -96,7 +96,7 @@ function create()
 
   this.anims.create({
     key: 'jump',
-    frames: [{ key: 'player', frame: 'robo_player_1' }],
+    frames: [{ key: 'player', frame: 'robo_player_2' }],
     framerate: 3,
   });
 
@@ -104,7 +104,7 @@ function create()
   this.a_key = this.input.keyboard.addKey('A');
   this.d_key = this.input.keyboard.addKey('D');
   this.w_key = this.input.keyboard.addKey('W');
-  
+
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
