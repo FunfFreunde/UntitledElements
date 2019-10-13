@@ -42,8 +42,9 @@ function preload()
 
 function create()
 {
-  game.scene.add('PlayGame', PlayGame);
-  game.scene.start('PlayGame');
+  game.scene.add('Menu', Menu);
+  game.scene.start('Menu');
+  this.spacePressed = false;
 
   const backgroundImage = this.add.image(-500,0,'background').setOrigin(0.0);
   backgroundImage.setScale(16, 3.5);
@@ -107,7 +108,8 @@ function create()
   this.a_key = this.input.keyboard.addKey('A');
   this.d_key = this.input.keyboard.addKey('D');
   this.w_key = this.input.keyboard.addKey('W');
-  
+  this.space_key = this.input.keyboard.addKey('SPACE');
+
   this.cameras.main.startFollow(this.player);
   playerReset(this.player);
 
@@ -141,7 +143,13 @@ function create()
 
 function update()
 {
-  fireWaterCollision(this.fires.getChildren(), this.waters.getChildren(), this.time);
+  if (this.space_key.isDown){
+    this.scene.remove('Menu');
+    this.spacePressed = true;
+  }
+
+  reIgniteFire(this.fires);
+  fireWaterCollision(this.fires.getChildren(), this.waters.getChildren());
 
   player_ = this.player;
   this.fires.getChildren().forEach(function(f)
@@ -151,29 +159,29 @@ function update()
 
 
   //----------Movement----------
+  if(this.spacePressed){
+    if(this.cursors.left.isDown || this.a_key.isDown)
+    {
+      this.player.setVelocityX(-300);
+      if(this.player.body.onFloor()) { this.player.play('walk', true); }
+    }
+    else if(this.cursors.right.isDown || this.d_key.isDown)
+    {
+      this.player.setVelocityX(300);
+      if(this.player.body.onFloor()) { this.player.play('walk', true); }
+    }
+    else
+    {
+      this.player.setVelocityX(0);
+      if(this.player.body.onFloor()) { this.player.play('idle', true); }
+    }
 
-  if(this.cursors.left.isDown || this.a_key.isDown)
-  {
-    this.player.setVelocityX(-300);
-    if(this.player.body.onFloor()) { this.player.play('walk', true); }
-  }
-  else if(this.cursors.right.isDown || this.d_key.isDown)
-  {
-    this.player.setVelocityX(300);
-    if(this.player.body.onFloor()) { this.player.play('walk', true); }
-  }
-  else
-  {
-    this.player.setVelocityX(0);
-    if(this.player.body.onFloor()) { this.player.play('idle', true); }
-  }
-
-  if((this.cursors.up.isDown || this.cursors.space.isDown || this.w_key.isDown) && this.player.body.onFloor())
-  {
-    this.player.setVelocityY(-350);
-    this.player.play('jump', true);
-    let jump = this.sound.add('jump');
-    jump.play();
+    if((this.cursors.up.isDown || this.cursors.space.isDown || this.w_key.isDown) && this.player.body.onFloor())
+    {
+      this.player.setVelocityY(-350);
+      this.player.play('jump', true);
+      let jump = this.sound.add('jump');
+      jump.play();
 
 
   }
