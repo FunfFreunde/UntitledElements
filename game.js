@@ -89,6 +89,7 @@ function create()
 
   this.fires = this.physics.add.group({
     allowGravity: false,
+    immovable: true,
   });
 
   this.anims.create({
@@ -101,14 +102,14 @@ function create()
     framerate: 10,
     repeat: -1
   });
-  this.fires.create(200, 645, 'fire');
+  this.fires.create(400, 2900, 'fire');
   this.fires.create(500, 645, 'fire');
+  this.fires.playAnimation('burn');
 }
 
 
 function update()
 {
-  this.fires.playAnimation('burn');
 //  this.fires.
 //  this.fires.forEach(function(fire) {
 //    fire.play('burn', true);
