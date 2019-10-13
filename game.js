@@ -21,8 +21,10 @@ const config = {
   }
 };
 
-const game = new Phaser.Game(config);
+var timedEvent;
 
+const game = new Phaser.Game(config);
+  
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
@@ -114,13 +116,13 @@ function create()
   this.fires.create(400, 2900, 'fire');
   this.fires.create(500, 645, 'fire');
   this.fires.playAnimation('burn');
+
 }
 
 
 function update()
 {
-  reIgniteFire(this.fires);
-  fireWaterCollision(this.fires.getChildren(), this.waters.getChildren());
+  fireWaterCollision(this.fires.getChildren(), this.waters.getChildren(), this.time);
 
   player_ = this.player;
   this.fires.getChildren().forEach(function(f)
@@ -212,35 +214,33 @@ function playerReset(player)
   player.play('idle', true);
 }
 
-function reIgniteFire(fires)
+function reIgniteFire(f)
 {
-  fires.getChildren().forEach(function(f)
-  {
     f.setVisible(true);
     f.setActive(true);
-  });
 }
 
-function extinguishFire(fire)
+function extinguishFire(fire, time)
 {
   fire.setVisible(false);
   fire.setActive(false);
+  timedEvent = time.delayedCall(3000, reIgniteFire, [fire], this);
 }
 
-function fireWaterCollision(fires, waters)
+function fireWaterCollision(fires, waters, time)
 {
   waters.forEach(function(w)
   {
     fires.forEach(function(f)
     {
-      console.log(w)
-      if(doCollide(w,f)) { extinguishFire(f); w.destroy(); }
+      if(doCollide(w,f)) { extinguishFire(f, time); w.destroy(); }
     });
   });
 }
 
 function doCollide(a, b)
 {
+  if(b.active == false){ return false;}
   if(a.x + a.width < b.x) { return false; }
   if(a.x > b.x + b.width) { return false; }
   if(a.y + a.height < b.y) { return false; }
