@@ -26,6 +26,7 @@ var timedEvent;
 
 const game = new Phaser.Game(config);
 
+
 function preload()
 {
   this.load.image('background', './assets/images/background.png');
@@ -115,6 +116,7 @@ function create()
       volume: .3,
       loop: true
     })
+
 
   this.fires = this.physics.add.group({
     allowGravity: false,
