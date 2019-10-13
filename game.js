@@ -204,9 +204,3 @@ function playerReset(player)
   player.setY(2900);
   player.play('idle', true);
 }
-
-function fireExtinguish()
-{
-
-}
-
